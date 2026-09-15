@@ -1,45 +1,53 @@
-# [Project name]
+# Love Space
 
-_Replace the heading above with the project's name, and this line with one sentence describing what this app does for users._
+A private, local-first Expo app for couples to collect shared activities, places, memories, and friendly match results.
 
 ## Run & Operate
 
-- `pnpm --filter @workspace/api-server run dev` — run the API server (port 5000)
-- `pnpm run typecheck` — full typecheck across all packages
-- `pnpm run build` — typecheck + build all packages
-- `pnpm --filter @workspace/api-spec run codegen` — regenerate API hooks and Zod schemas from the OpenAPI spec
-- `pnpm --filter @workspace/db run push` — push DB schema changes (dev only)
-- Required env: `DATABASE_URL` — Postgres connection string
+- `pnpm --filter @workspace/our-space run dev` — run the Expo mobile app
+- `pnpm --filter @workspace/our-space run typecheck` — typecheck the mobile app
+- `pnpm run typecheck` — typecheck all workspace packages
+- `pnpm run build` — typecheck and build all packages that expose a build script
+- `pnpm --filter @workspace/api-server run dev` — run the API server when backend work is needed
 
 ## Stack
 
-- pnpm workspaces, Node.js 24, TypeScript 5.9
-- API: Express 5
-- DB: PostgreSQL + Drizzle ORM
-- Validation: Zod (`zod/v4`), `drizzle-zod`
-- API codegen: Orval (from OpenAPI spec)
-- Build: esbuild (CJS bundle)
+- pnpm workspaces, Node.js 24, TypeScript
+- Mobile: Expo SDK 54, Expo Router, React Native
+- Persistence: AsyncStorage for local-first device storage
+- Photos: `expo-image-picker`
+- Location: `expo-location`
+- Map: `react-native-maps` on native, a web-safe fallback in browser preview
+- API foundation: Express, OpenAPI, Zod, Drizzle packages are available for future backend work
 
 ## Where things live
 
-_Populate as you build — short repo map plus pointers to the source-of-truth file for DB schema, API contracts, theme files, etc._
+- `artifacts/our-space/app/` — Expo Router screens and tabs
+- `artifacts/our-space/context/SpaceContext.tsx` — shared local state and persistence
+- `artifacts/our-space/components/MapSurface*` — native map and web fallback
+- `artifacts/our-space/constants/colors.ts` — warm light/dark color palette
+- `artifacts/our-space/app.json` — Expo app configuration
+- `artifacts/api-server/` — API service foundation
+- `lib/` — shared API, database, and generated type packages
 
 ## Architecture decisions
 
-_Populate as you build — non-obvious choices a reader couldn't infer from the code (3-5 bullets)._
+- The first release is local-first so the app remains useful without account setup or a backend.
+- Relationship data is kept in shared context and persisted through AsyncStorage rather than duplicated across screens.
+- Native-only map code is isolated behind platform-specific files so the web preview can bundle safely.
+- User-created content is shown throughout the app; demo relationship data is intentionally avoided.
 
 ## Product
 
-_Describe the high-level user-facing capabilities of this app once they exist._
-
-## User preferences
-
-_Populate as you build — explicit user instructions worth remembering across sessions._
+The mobile app lets two people create their own shared space: add ideas for things to do, record places with photos and coordinates, save photo memories, and keep score in friendly matches. The interface is intentionally warm, simple, and private by default.
 
 ## Gotchas
 
-_Populate as you build — sharp edges, "always run X before Y" rules._
+- `react-native-maps` is pinned to `1.18.0` for the Expo setup.
+- Do not import native map internals directly from screens; use the `MapSurface` wrapper.
+- The current storage is device-local. Do not describe it as cloud sync or secure account storage.
 
 ## Pointers
 
-- See the `pnpm-workspace` skill for workspace structure, TypeScript setup, and package details
+- The public project documentation is in `README.md`.
+- The main product is in `artifacts/our-space`.
