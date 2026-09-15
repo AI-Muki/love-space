@@ -1,0 +1,24 @@
+kind = "mobile"
+previewPath = "/"
+title = "Our Space"
+description = "A private couples app for shared plans, bucket-list adventures, memories, date ideas, and playful scorekeeping between two partners."
+version = "1.0.0"
+id = "artifacts/our-space"
+router = "expo-domain"
+
+[[services]]
+name = "expo"
+ensurePreviewReachable = "/status"
+paths = [ "/" ]
+localPort = 25980
+
+[services.development]
+run = "pnpm --filter @workspace/our-space run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/our-space", "run", "build" ]
+run = [ "pnpm", "--filter", "@workspace/our-space", "run", "serve" ]
+
+[services.env]
+PORT = "25980"
+BASE_PATH = "/"

@@ -1,0 +1,8 @@
+import React, { ReactNode } from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+
+export function MapView({ children }: { children?: ReactNode }) {
+  return <View style={styles.map}><View style={styles.lines}><View style={styles.lineA} /><View style={styles.lineB} /><View style={styles.lineC} /></View><View style={styles.pin}><View style={styles.pinDot} /></View><Text style={styles.label}>Your places will appear here</Text>{children}</View>;
+}
+export function Marker() { return null; }
+const styles = StyleSheet.create({ map: { flex: 1, backgroundColor: '#E6E4DF', overflow: 'hidden', alignItems: 'center', justifyContent: 'center' }, lines: { ...StyleSheet.absoluteFillObject, opacity: .42 }, lineA: { position: 'absolute', width: '150%', height: 1, backgroundColor: '#B8B3AE', top: '34%', transform: [{ rotate: '12deg' }] }, lineB: { position: 'absolute', width: '150%', height: 1, backgroundColor: '#B8B3AE', top: '60%', transform: [{ rotate: '-18deg' }] }, lineC: { position: 'absolute', width: '1px' as any, height: '140%', backgroundColor: '#B8B3AE', left: '48%', transform: [{ rotate: '24deg' }] }, pin: { width: 34, height: 34, borderRadius: 17, backgroundColor: '#C96B5B', alignItems: 'center', justifyContent: 'center', shadowColor: '#000', shadowOpacity: .15, shadowRadius: 5 }, pinDot: { width: 10, height: 10, borderRadius: 5, backgroundColor: '#FAF7F2' }, label: { position: 'absolute', bottom: 13, color: '#665B61', fontSize: 11, backgroundColor: 'rgba(250,247,242,.8)', paddingHorizontal: 10, paddingVertical: 6, borderRadius: 12 } });
